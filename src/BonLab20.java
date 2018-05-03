@@ -17,14 +17,14 @@ public class BonLab20 {
 
 		while (cont.equalsIgnoreCase("y")) {
 			HashMap<String, Double> products = new HashMap<>();
-			products.put("apple", 0.99);
-			products.put("banana", 0.59);
-			products.put("orange", .79);
-			products.put("chicken", .99);
-			products.put("pizza", 1.99);
-			products.put("hamburger", .79);
-			products.put("cheeseburger", .89);
-			products.put("watermelon", .89);
+			products.put("apple", 0.89);
+			products.put("banana", 0.75);
+			products.put("orange", 0.79);
+			products.put("chicken", 2.49);
+			products.put("pizza", 1.89);
+			products.put("hamburger", 0.98);
+			products.put("cheeseburger", 1.25);
+			products.put("watermelon", 1.89);
 
 			System.out.printf("%-15s %-10s", "Item", "Price");
 			System.out.println();
@@ -48,15 +48,14 @@ public class BonLab20 {
 
 			// add to order
 			if (products.containsKey(userInput)) {
+				orderList.add(userInput);
+				priceList.add(products.get(userInput));
 				System.out.println("Adding " + userInput + " to cart at " + products.get(userInput));
 			} else {
 				System.out.println("Sorry, we don't have those. Please try again.");
 			}
 
 			System.out.println();
-
-			orderList.add(userInput);
-			priceList.add(products.get(userInput));
 
 			// prompt user to continue with order
 			System.out.println("Would you like to order anything else (y/n)?");
@@ -74,10 +73,20 @@ public class BonLab20 {
 			System.out.println();
 		}
 
-		System.out.printf("Average price per item in order was %.2f", averagPrice(priceList));
+		if (orderList.size() == 0) {
+			System.out.println("You did not order anything!");
+		} else {
+			System.out.printf("Average price per item in order was %.2f", averagPrice(priceList));
+			System.out.println();
+			System.out.printf("Most expensive item was %.2f", highestIndex(priceList));
+			System.out.println();
+			System.out.printf("Least expensive item was %.2f", lowestIndex(priceList));
+		}
+
 		System.out.println();
 		System.out.println("Good bye!");
 
+		scan.close();
 	}
 	// Method to determine average of price of items ordered
 
@@ -89,5 +98,27 @@ public class BonLab20 {
 		Double avg = sum / priceList.size();
 
 		return avg;
+	}
+
+	public static double highestIndex(ArrayList<Double> priceList) {
+
+		double highestPrice = 0.0;
+
+		for (int i = 0; i < priceList.size(); i++) {
+			if (highestPrice < priceList.get(i))
+				highestPrice = priceList.get(i);
+		}
+		return highestPrice;
+	}
+
+	public static double lowestIndex(ArrayList<Double> priceList) {
+
+		double lowestPrice = highestIndex(priceList);
+
+		for (int i = 0; i < priceList.size(); i++) {
+			if (lowestPrice > priceList.get(i))
+				lowestPrice = priceList.get(i);
+		}
+		return lowestPrice;
 	}
 }
